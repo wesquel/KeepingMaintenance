@@ -18,7 +18,7 @@ public class Maintenance {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "status_id", referencedColumnName = "id")
+    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
     private Status status;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
