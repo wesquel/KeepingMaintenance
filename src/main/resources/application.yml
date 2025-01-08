@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: KeepingMaintenance
+    version: 0.1
+
+  datasource:
+    url: jdbc:mysql://localhost/keeping_maintenance
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
