@@ -1,11 +1,11 @@
 package br.com.addson.keepingmaintenance.service;
 
 import br.com.addson.keepingmaintenance.dto.maintenance.MaintenanceRequest;
-import br.com.addson.keepingmaintenance.model.Device;
 import br.com.addson.keepingmaintenance.model.Maintenance;
 import br.com.addson.keepingmaintenance.model.Status;
 import br.com.addson.keepingmaintenance.repository.MaintenanceRepository;
 import br.com.addson.keepingmaintenance.repository.StatusRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +25,12 @@ public class MaintenanceService {
     public ResponseEntity<?> createMaintenance(MaintenanceRequest maintenanceRequest){
 
         Maintenance maintenance = maintenanceRequest.toEntity();
+
         Optional<Status> status = statusRepository.findById((long) maintenanceRequest.statusRequest().id());
-        status.ifPresent(maintenance::setStatus);
+
+        if (status.isEmpty()){
+          return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Status não encontrado!");
+        }
 
         maintenanceRepository.save(maintenance);
 
