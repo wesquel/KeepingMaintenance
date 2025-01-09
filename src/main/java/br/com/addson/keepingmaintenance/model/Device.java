@@ -19,7 +19,11 @@ public class Device {
     private String name;
     private String description;
 
-    @OneToMany
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "device_type_id")
+    private DeviceType deviceType;
+
+    @ManyToMany
     @JoinTable(
         name = "device_component",
         joinColumns = @JoinColumn(name = "device_id"),
