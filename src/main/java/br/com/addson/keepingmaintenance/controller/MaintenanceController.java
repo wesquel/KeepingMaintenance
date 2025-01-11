@@ -4,7 +4,6 @@ import br.com.addson.keepingmaintenance.dto.maintenance.MaintenanceRequest;
 import br.com.addson.keepingmaintenance.service.MaintenanceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,9 +16,15 @@ public class MaintenanceController {
         this.maintenanceService = maintenanceService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        return maintenanceService.getById(id);
+    }
+
     @GetMapping
-    public String get(){
-        return "get";
+    public ResponseEntity<?> listAll(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return maintenanceService.listAll(page, size);
     }
 
     @PostMapping("/create")

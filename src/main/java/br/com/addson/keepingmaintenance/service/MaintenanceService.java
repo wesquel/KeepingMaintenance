@@ -1,11 +1,15 @@
 package br.com.addson.keepingmaintenance.service;
 
 import br.com.addson.keepingmaintenance.dto.maintenance.MaintenanceRequest;
+import br.com.addson.keepingmaintenance.dto.maintenance.MaintenanceResponse;
 import br.com.addson.keepingmaintenance.model.Component;
-import br.com.addson.keepingmaintenance.model.DeviceType;
 import br.com.addson.keepingmaintenance.model.Maintenance;
 import br.com.addson.keepingmaintenance.model.Status;
 import br.com.addson.keepingmaintenance.repository.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -49,6 +53,23 @@ public class MaintenanceService {
         maintenance.getDevice().setComponentList(componentList);
         maintenanceRepository.save(maintenance);
 
-        return ResponseEntity.ok().body("maintenance created");
+        return ResponseEntity.status(HttpStatus.CREATED).body(MaintenanceResponse.fromEntity(maintenance));
+    }
+
+    public ResponseEntity<?> listAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("name").ascending());
+        Page<Maintenance> maintenancePage = maintenanceRepository.findAll(pageable);
+
+        Page<MaintenanceResponse> responsePage = maintenancePage.map(MaintenanceResponse::fromEntity);
+
+        return ResponseEntity.ok().body(responsePage);
+    }
+
+    public ResponseEntity<?> getById(Long id) {
+        Optional<Maintenance> optionalMaintenance = maintenanceRepository.findById(id);
+        if (optionalMaintenance.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Maintenance not found");
+        }
+        return ResponseEntity.ok(MaintenanceResponse.fromEntity(optionalMaintenance.get()));
     }
 }
