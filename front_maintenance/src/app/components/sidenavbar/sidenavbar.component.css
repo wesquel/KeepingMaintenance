@@ -4,6 +4,7 @@ mat-sidenav {
   transition: width 0.3s ease-in-out;
   border-radius: 0px;
   background-color: #FFFFFF;
+  box-shadow: 3px 0 5px rgba(74, 91, 245, 0.2);
 }
 
 mat-toolbar {
@@ -20,7 +21,7 @@ mat-sidenav.collapsed {
 
 .content {
   display: flex;
-  background-color: #464646;
+  background-color: #0004ff;
   width: 100%;
   height: 100%;
 }
@@ -43,3 +44,5 @@ mat-toolbar button mat-icon {
   padding: 0;
   border: none;
 }
+
+
