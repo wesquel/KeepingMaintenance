@@ -1,10 +1,12 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { MatIconModule } from '@angular/material/icon';  // Certifique-se de que o MatIconModule está importado
+import { MatIconModule } from '@angular/material/icon';
 import { HomeComponent } from './pages/home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidenavbarComponent } from './components/sidenavbar/sidenavbar.component';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,6 +14,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     MatIconModule,  // Adicione MatIconModule aos provedores
     HomeComponent,
-    SidenavbarComponent
+    SidenavbarComponent,
+    BrowserAnimationsModule,
+    provideAnimations()
   ]
 };
