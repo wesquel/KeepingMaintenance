@@ -1,0 +1,21 @@
+/* cores #8FEA67 #8BC075 #7E9674 #616B5C #33412D #22331B */
+/* Remove qualquer margem implícita entre o toolbar e o conteúdo */
+mat-toolbar {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-shadow: none; /* Remove qualquer sombra que possa estar criando um traço visual */
+}
+
+/* Certifique-se de que o mat-sidenav-content não tenha margens ou bordas */
+mat-sidenav-content {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* Ajuste global para eliminar margens padrão */
+body, html {
+  margin: 0;
+  padding: 0;
+}
