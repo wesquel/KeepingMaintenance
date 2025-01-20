@@ -1,0 +1,32 @@
+
+.row_table:hover {
+  cursor: pointer;
+  background-color: #d8d8d8;
+}
+
+.td-status {
+  display: flex;
+}
+
+.status {
+  border: 1px solid #5c5c5c;
+  padding: 3px 10px;
+  border-radius: 5px;
+}
+
+
+.status-pending {
+  background-color: #faee4096; /* Amarelo claro */
+}
+
+.status-operational {
+  background-color: #40fa4096; /* Verde claro */
+}
+
+.status-inoperative {
+  background-color: #fa404096; /* Vermelho claro */
+}
+
+.status-parts-required {
+  background-color: #a1a1a196; /* Cinza claro */
+}
