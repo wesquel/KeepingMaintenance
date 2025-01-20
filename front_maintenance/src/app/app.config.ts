@@ -7,15 +7,17 @@ import { HomeComponent } from './pages/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidenavbarComponent } from './components/sidenavbar/sidenavbar.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http'; // Importar HttpClientModule e helper
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    MatIconModule,  // Adicione MatIconModule aos provedores
+    MatIconModule,
     HomeComponent,
     SidenavbarComponent,
     BrowserAnimationsModule,
-    provideAnimations()
+    provideAnimations(),
+    provideHttpClient(), // Adicione o provedor para HttpClient
   ]
 };
