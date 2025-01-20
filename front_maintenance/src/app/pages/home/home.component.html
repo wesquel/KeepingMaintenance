@@ -1,10 +1,17 @@
 <div class="top-section">
   <h2>Search for maintenance</h2>
   <mat-form-field appearance="outline">
-    <input matInput placeholder="Maintenance Id">
+    <input matInput placeholder="Maintenance Id" [(ngModel)]="filterValue" (input)="onFilterChange(filterValue)">
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
+
+  <section>
+    <div class="example-button-row">
+      <button mat-flat-button mat-raised-button (click)="openDialog()">Adicionar Manutenção</button>
+    </div>
+  </section>
+
 </div>
 <div class="bottom-section">
-  <app-table-maintenance></app-table-maintenance>
+  <app-table-maintenance [filter]="filterValue"></app-table-maintenance>
 </div>
