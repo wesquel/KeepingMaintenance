@@ -27,3 +27,26 @@ button[mat-button] {
 mat-stepper {
   padding: 10px;
 }
+
+.content-title {
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+  position: relative;
+  padding: 10px; /* Espaço interno */
+}
+
+.content-wrapper {
+  flex: 1; /* Ocupa o espaço disponível */
+  text-align: center; /* Garante que o texto dentro do h2 esteja centralizado */
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+textarea {
+  resize: none;
+}

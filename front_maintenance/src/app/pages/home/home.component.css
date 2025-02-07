@@ -50,3 +50,7 @@ section {
   justify-content: center;
   width: 140px;
 }
+
+.custom-dialog .mat-dialog-container {
+  border-radius: 0 !important; /* !important pode ser necessário para sobrescrever estilos padrão */
+}

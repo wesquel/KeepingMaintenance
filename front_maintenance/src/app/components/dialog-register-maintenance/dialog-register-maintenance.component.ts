@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -13,15 +13,19 @@ import { StatusService } from '../../core/services/status/status.service';
 import { Status } from '../../core/models/status.model';
 import { DeviceType } from '../../core/models/device-type.model';
 import { DeviceTypeService } from '../../core/services/deviceType/device-type.service';
+import { MaintenanceService } from '../../core/services/maintenance/maintenance.service';
+import { DialogRef } from '@angular/cdk/dialog';
+import { ResponseDialogComponent } from '../response-dialog/response-dialog.component';
+import { TableMaintenanceComponent } from '../table-maintenance/table-maintenance.component';
 
 @Component({
   selector: 'app-dialog-register-maintenance',
   standalone: true, // Especifica que o componente é standalone
   imports: [
-    MatFormFieldModule, MatDialogActions, MatDialogClose,
+    MatFormFieldModule, MatDialogClose,
     CommonModule, MatIconModule, FormsModule, MatInputModule,
     ReactiveFormsModule, MatButtonModule, MatDividerModule,
-    MatSelectModule, MatStepperModule
+    MatSelectModule, MatStepperModule, MatDialogContent
   ],
   templateUrl: './dialog-register-maintenance.component.html',
   styleUrls: ['./dialog-register-maintenance.component.css'] // Corrigido
@@ -35,21 +39,25 @@ export class DialogRegisterMaintenanceComponent implements OnInit{
   statuses: Status[] = [];
   deviceTypes: DeviceType[] = [];
 
-  constructor(private formBuilder: FormBuilder, private statusService: StatusService, private deviceTypeService: DeviceTypeService) {
+  constructor(private formBuilder: FormBuilder,
+    private statusService: StatusService,
+    private deviceTypeService: DeviceTypeService,
+    private maintenanceService: MaintenanceService,
+    private dialogRef: MatDialogRef<DialogRegisterMaintenanceComponent>,
+    private dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public tableComponent: TableMaintenanceComponent
+
+  ) {
     this.maintenanceFormGroup = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      statusRequest: this.formBuilder.group({
-        id: ['', Validators.required], // Controle para "statusRequest.id"
-      }),
+      status: ['', Validators.required],  // Changed to FormControl
     });
 
     this.deviceFormGroup = this.formBuilder.group({
       deviceName: ['', Validators.required], // Controle para "deviceRequest.name"
       deviceDescription: ['', Validators.required], // Controle para "deviceRequest.description"
-      deviceTypeRequest: this.formBuilder.group({
-        id: ['', Validators.required], // Controle para "deviceRequest.deviceTypeRequest.id"
-      }),
+      deviceType: ['', Validators.required],
     });
   }
 
@@ -72,18 +80,54 @@ export class DialogRegisterMaintenanceComponent implements OnInit{
 
     this.deviceTypeService.getDeviceTypes().subscribe({
       next: (data: DeviceType[]) => {
-        this.deviceTypes = data.map(status => ({
-          id: status.id,
-          name: status.name
+        this.deviceTypes = data.map(deviceType => ({
+          id: deviceType.id,
+          name: deviceType.name
         }));
       },
       error: (error) => {
         console.error('Erro ao buscar deviceTypes:', error);
-      },
-      complete: () => {
-        console.log('Requisição completa');
       }
     });
+  }
+
+  onSubmit(): void {
+    if (this.maintenanceFormGroup.valid && this.deviceFormGroup.valid) {
+      const payload = {
+        name: this.maintenanceFormGroup.value.name,
+        description: this.maintenanceFormGroup.value.description,
+        statusRequest: {
+          id: this.maintenanceFormGroup.value.status
+        },
+        deviceRequest: {
+          name: this.deviceFormGroup.value.deviceName,
+          description: this.deviceFormGroup.value.deviceDescription,
+          deviceTypeRequest: {
+            id: this.deviceFormGroup.value.deviceType
+          }
+        }
+      };
+
+      this.maintenanceService.createMaintenance(payload).subscribe({
+        next: (response) => {
+          console.log('Manutenção criada com sucesso:', response);
+          this.dialogRef.close();
+          this.dialog.open(ResponseDialogComponent, {
+            data: { id: response.id },
+            width: '400px'
+          });
+          if (this.tableComponent) {
+            this.tableComponent.fetchMaintenances();
+          }
+        },
+        error: (error) => {
+          console.error('Erro ao criar manutenção:', error);
+          // Opcional: Exibir mensagem de erro ao usuário
+        }
+      });
+    } else {
+      console.error('Formulários inválidos');
+    }
   }
 
 }

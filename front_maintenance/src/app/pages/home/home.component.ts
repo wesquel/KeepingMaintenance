@@ -30,8 +30,9 @@ export class HomeComponent {
 
   openDialog(): void {
     this.dialog.open(DialogRegisterMaintenanceComponent, {
-      width: '800px', // Largura personalizada
-      height: '600px', // Altura personalizada
+      width: '800px',
+      height: '600px',
+      panelClass: 'custom-dialog'
     });
   }
 }

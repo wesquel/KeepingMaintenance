@@ -34,7 +34,7 @@ export class TableMaintenanceComponent implements AfterViewInit, OnChanges {
     this.fetchMaintenances();
   }
 
-  private fetchMaintenances(): void {
+  public fetchMaintenances(): void {
     this.maintenanceService.getMaintenances(0, 100000).subscribe({
       next: (data) => {
         this.dataSource.data = data.content;
