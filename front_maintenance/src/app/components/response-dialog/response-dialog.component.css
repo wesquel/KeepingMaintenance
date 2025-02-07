@@ -1,0 +1,21 @@
+.dialog-container {
+  text-align: center;
+  padding: 20px;
+}
+.success-icon {
+  font-size: 64px;
+  color: green;
+  width: 64px;
+  height: 64px;
+  line-height: 64px;
+  display: inline-block;
+}
+
+h2 {
+  margin: 16px 0;
+  font-size: 24px;
+}
+p {
+  font-size: 18px;
+  margin: 8px 0;
+}
