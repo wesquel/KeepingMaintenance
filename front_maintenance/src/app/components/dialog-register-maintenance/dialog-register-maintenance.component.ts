@@ -118,7 +118,6 @@ export class DialogRegisterMaintenanceComponent implements OnInit {
             width: '400px'
           });
           this.maintenanceUpdateService.notifyMaintenanceUpdated();
-          this.tableComponent.fetchMaintenances();
         },
         error: (error) => {
           console.error('Erro ao criar manutenção:', error);
