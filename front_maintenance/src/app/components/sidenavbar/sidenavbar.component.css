@@ -1,7 +1,6 @@
 /* Largura do Sidenav */
 mat-sidenav {
   width: 240px;
-  transition: width 0.3s ease-in-out;
   border-radius: 0px;
   background-color: #FFFFFF;
   box-shadow: 3px 0 5px rgba(74, 91, 245, 0.2);

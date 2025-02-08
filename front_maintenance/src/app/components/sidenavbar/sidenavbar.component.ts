@@ -22,20 +22,9 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class SidenavbarComponent {
+
   isCollapsed = false;
-
   constructor(private cdr: ChangeDetectorRef) {}
-
-
-  ngAfterViewInit() {
-    this.startResizeInterval()
-  }
-
-  startResizeInterval(): void {
-    setInterval(() => {
-      window.dispatchEvent(new Event('resize'));
-    }, 0);
-  }
 
   toggleSidenav(): void {
     this.isCollapsed = !this.isCollapsed;
