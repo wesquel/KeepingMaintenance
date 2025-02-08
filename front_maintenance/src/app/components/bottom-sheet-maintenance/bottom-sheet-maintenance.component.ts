@@ -4,7 +4,7 @@ import { MatListModule, MatNavList } from '@angular/material/list';
 import { DialogRegisterMaintenanceComponent } from '../dialog-register-maintenance/dialog-register-maintenance.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditMaintenanceComponent } from '../dialog-edit-maintenance/dialog-edit-maintenance.component';
-import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-bottom-sheet-maintenance',
@@ -17,14 +17,9 @@ export class BottomSheetMaintenanceComponent {
 
   constructor(
     private dialog: MatDialog,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { maintenanceId: number }
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { maintenanceId: number },
+    private bottomSheetRef: MatBottomSheetRef<BottomSheetMaintenanceComponent>
   ) {}
-
-  options = [
-    { title: 'Option 1', description: 'Description for Option 1', action: () => this.performAction('Option 1') },
-    { title: 'Option 2', description: 'Description for Option 2', action: () => this.performAction('Option 2') },
-    { title: 'Option 3', description: 'Description for Option 3', action: () => this.performAction('Option 3') },
-  ];
 
   performAction(option: string): void {
     console.log(`Action performed for: ${option}`);
@@ -37,5 +32,6 @@ export class BottomSheetMaintenanceComponent {
       panelClass: 'custom-dialog',
       data: {maintenanceId : this.data.maintenanceId}
     });
+    this.bottomSheetRef.dismiss();
   }
 }

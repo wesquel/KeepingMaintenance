@@ -19,6 +19,7 @@ import { Status } from '../../core/models/status.model';
 import { DeviceType } from '../../core/models/device-type.model';
 import { TableMaintenanceComponent } from '../table-maintenance/table-maintenance.component';
 import { ResponseDialogComponent } from '../response-dialog/response-dialog.component';
+import { MaintenanceUpdateService } from '../../core/services/maintenanceUpdate/maintenance-update.service';
 
 @Component({
   selector: 'app-dialog-edit-maintenance',
@@ -39,7 +40,8 @@ export class DialogEditMaintenanceComponent implements OnInit {
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public tableComponent: TableMaintenanceComponent,
     private dialogRef: MatDialogRef<DialogEditMaintenanceComponent>,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private maintenanceUpdateService: MaintenanceUpdateService
   ) {}
 
   maintenanceFormGroup!: FormGroup;
@@ -137,6 +139,7 @@ export class DialogEditMaintenanceComponent implements OnInit {
             data: { id: this.data.maintenanceId },
             width: '400px'
           });
+          this.maintenanceUpdateService.notifyMaintenanceUpdated();
         },
         error: (error) => {
           console.error('Erro ao atualizar manutenção:', error);

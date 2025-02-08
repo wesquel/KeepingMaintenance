@@ -16,6 +16,7 @@ import { DeviceTypeService } from '../../core/services/deviceType/device-type.se
 import { MaintenanceService } from '../../core/services/maintenance/maintenance.service';
 import { ResponseDialogComponent } from '../response-dialog/response-dialog.component';
 import { TableMaintenanceComponent } from '../table-maintenance/table-maintenance.component';
+import { MaintenanceUpdateService } from '../../core/services/maintenanceUpdate/maintenance-update.service';
 
 @Component({
   selector: 'app-dialog-register-maintenance',
@@ -44,7 +45,8 @@ export class DialogRegisterMaintenanceComponent implements OnInit {
     private maintenanceService: MaintenanceService,
     private dialogRef: MatDialogRef<DialogRegisterMaintenanceComponent>,
     private dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public tableComponent: TableMaintenanceComponent
+    @Inject(MAT_DIALOG_DATA) public tableComponent: TableMaintenanceComponent,
+    private maintenanceUpdateService: MaintenanceUpdateService
 
   ) {
     this.maintenanceFormGroup = this.formBuilder.group({
@@ -115,9 +117,8 @@ export class DialogRegisterMaintenanceComponent implements OnInit {
             data: { id: response.id },
             width: '400px'
           });
-          if (this.tableComponent) {
-            this.tableComponent.fetchMaintenances();
-          }
+          this.maintenanceUpdateService.notifyMaintenanceUpdated();
+          this.tableComponent.fetchMaintenances();
         },
         error: (error) => {
           console.error('Erro ao criar manutenção:', error);

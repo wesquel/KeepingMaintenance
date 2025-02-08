@@ -7,6 +7,7 @@ import { MaintenanceService } from '../../core/services/maintenance/maintenance.
 import {MatChipsModule} from '@angular/material/chips';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { BottomSheetMaintenanceComponent } from '../bottom-sheet-maintenance/bottom-sheet-maintenance.component';
+import { MaintenanceUpdateService } from '../../core/services/maintenanceUpdate/maintenance-update.service';
 
 
 @Component({
@@ -26,19 +27,28 @@ export class TableMaintenanceComponent implements AfterViewInit, OnChanges {
 
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
 
-  constructor(private maintenanceService: MaintenanceService, private bottomSheet: MatBottomSheet) {}
+  constructor(
+    private maintenanceService: MaintenanceService,
+    private bottomSheet: MatBottomSheet,
+    private maintenanceUpdateService: MaintenanceUpdateService
+  ) {}
 
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.fetchMaintenances();
+
+    this.maintenanceUpdateService.maintenanceUpdated$.subscribe(() => {
+      this.fetchMaintenances(); // Atualiza a lista de manutenções
+    });
   }
 
-  public fetchMaintenances(): void {
+  fetchMaintenances(): void {
     this.maintenanceService.getMaintenances(0, 100000).subscribe({
       next: (data) => {
         this.dataSource.data = data.content;
-        this.filteredData = [...this.dataSource.data];
+        this.applyFilter(); // Aplica o filtro após os dados serem atualizados
+        this.dataSource._updateChangeSubscription(); // Atualiza a tabela
       },
       error: (err) => console.error('Error fetching maintenances:', err),
     });
@@ -56,9 +66,7 @@ export class TableMaintenanceComponent implements AfterViewInit, OnChanges {
 
   applyFilter(): void {
     const filterValue = this.filter.trim().toLowerCase();
-    this.filteredData = this.dataSource.data.filter(item =>
-      item.id.toString().toLowerCase().includes(filterValue) // Converta o `id` para string
-    );
+    this.dataSource.filter = filterValue;
   }
 
   getStatusClass(statusName: string): string {
