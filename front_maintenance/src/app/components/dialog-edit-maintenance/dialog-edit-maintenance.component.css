@@ -1,0 +1,52 @@
+h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espaçamento entre os campos */
+  max-width: 600px; /* Limita a largura do formulário */
+  margin: 0 auto; /* Centraliza o formulário */
+  padding: 16px; /* Espaçamento interno */
+  background-color: #f9f9f9; /* Cor de fundo suave */
+  border: 1px solid #ddd; /* Borda discreta */
+  border-radius: 8px; /* Bordas arredondadas */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+  margin-top: 10px;
+}
+
+mat-form-field {
+  width: 100%; /* Faz os campos ocuparem toda a largura disponível */
+}
+
+button[mat-button] {
+  align-self: flex-end; /* Posiciona o botão à direita */
+}
+
+mat-stepper {
+  padding: 10px;
+}
+
+.content-title {
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+  position: relative;
+  padding: 10px; /* Espaço interno */
+}
+
+.content-wrapper {
+  flex: 1; /* Ocupa o espaço disponível */
+  text-align: center; /* Garante que o texto dentro do h2 esteja centralizado */
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+textarea {
+  resize: none;
+}

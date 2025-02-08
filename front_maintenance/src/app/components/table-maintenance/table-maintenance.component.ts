@@ -44,8 +44,10 @@ export class TableMaintenanceComponent implements AfterViewInit, OnChanges {
     });
   }
 
-  openBottomSheet(): void {
-    this.bottomSheet.open(BottomSheetMaintenanceComponent);
+  openBottomSheet(maintenanceId: number): void {
+    this.bottomSheet.open(BottomSheetMaintenanceComponent, {
+      data: {maintenanceId: maintenanceId}
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

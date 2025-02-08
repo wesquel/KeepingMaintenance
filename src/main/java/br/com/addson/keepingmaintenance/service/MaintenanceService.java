@@ -1,6 +1,7 @@
 package br.com.addson.keepingmaintenance.service;
 
 import br.com.addson.keepingmaintenance.dto.maintenance.MaintenanceRequest;
+import br.com.addson.keepingmaintenance.dto.maintenance.MaintenanceRequestUpdate;
 import br.com.addson.keepingmaintenance.dto.maintenance.MaintenanceResponse;
 import br.com.addson.keepingmaintenance.model.Component;
 import br.com.addson.keepingmaintenance.model.Maintenance;
@@ -34,7 +35,7 @@ public class MaintenanceService {
     }
 
 
-    public ResponseEntity<?> createMaintenance(MaintenanceRequest maintenanceRequest){
+    public ResponseEntity<?> create(MaintenanceRequest maintenanceRequest){
 
         Maintenance maintenance = maintenanceRequest.toEntity();
 
@@ -71,5 +72,24 @@ public class MaintenanceService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Maintenance not found");
         }
         return ResponseEntity.ok(MaintenanceResponse.fromEntity(optionalMaintenance.get()));
+    }
+
+
+    public ResponseEntity<?> update(MaintenanceRequestUpdate maintenanceRequestUpdate) {
+        Maintenance maintenance = maintenanceRepository.getReferenceById(maintenanceRequestUpdate.id());
+        maintenance.setName(maintenanceRequestUpdate.name());
+        maintenance.setDescription(maintenanceRequestUpdate.description());
+        Long deviceTypeId = maintenanceRequestUpdate.deviceRequest().deviceTypeRequest().id();
+        maintenance.getDevice().setDeviceType(deviceTypeRepository.getReferenceById(deviceTypeId));
+
+        Optional<Status> status = statusRepository.findById((long) maintenanceRequestUpdate.statusRequest().id());
+
+        if (status.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Status não encontrado!");
+        }
+        maintenance.setStatus(status.get());
+        maintenanceRepository.save(maintenance);
+
+        return ResponseEntity.ok().body(MaintenanceResponse.fromEntity(maintenance));
     }
 }

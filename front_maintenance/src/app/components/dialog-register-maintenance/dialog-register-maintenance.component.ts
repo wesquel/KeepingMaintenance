@@ -14,7 +14,6 @@ import { Status } from '../../core/models/status.model';
 import { DeviceType } from '../../core/models/device-type.model';
 import { DeviceTypeService } from '../../core/services/deviceType/device-type.service';
 import { MaintenanceService } from '../../core/services/maintenance/maintenance.service';
-import { DialogRef } from '@angular/cdk/dialog';
 import { ResponseDialogComponent } from '../response-dialog/response-dialog.component';
 import { TableMaintenanceComponent } from '../table-maintenance/table-maintenance.component';
 
@@ -25,12 +24,12 @@ import { TableMaintenanceComponent } from '../table-maintenance/table-maintenanc
     MatFormFieldModule, MatDialogClose,
     CommonModule, MatIconModule, FormsModule, MatInputModule,
     ReactiveFormsModule, MatButtonModule, MatDividerModule,
-    MatSelectModule, MatStepperModule, MatDialogContent
+    MatSelectModule, MatStepperModule
   ],
   templateUrl: './dialog-register-maintenance.component.html',
   styleUrls: ['./dialog-register-maintenance.component.css'] // Corrigido
 })
-export class DialogRegisterMaintenanceComponent implements OnInit{
+export class DialogRegisterMaintenanceComponent implements OnInit {
 
   maintenanceFormGroup: FormGroup;
   deviceFormGroup: FormGroup;
@@ -122,7 +121,6 @@ export class DialogRegisterMaintenanceComponent implements OnInit{
         },
         error: (error) => {
           console.error('Erro ao criar manutenção:', error);
-          // Opcional: Exibir mensagem de erro ao usuário
         }
       });
     } else {

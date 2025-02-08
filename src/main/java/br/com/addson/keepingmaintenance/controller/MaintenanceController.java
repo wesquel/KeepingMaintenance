@@ -1,7 +1,9 @@
 package br.com.addson.keepingmaintenance.controller;
 
 import br.com.addson.keepingmaintenance.dto.maintenance.MaintenanceRequest;
+import br.com.addson.keepingmaintenance.dto.maintenance.MaintenanceRequestUpdate;
 import br.com.addson.keepingmaintenance.service.MaintenanceService;
+import com.sun.tools.javac.Main;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +32,15 @@ public class MaintenanceController {
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody MaintenanceRequest maintenanceRequest) {
         try {
-            return maintenanceService.createMaintenance(maintenanceRequest);
+            return maintenanceService.create(maintenanceRequest);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody MaintenanceRequestUpdate maintenanceRequestUpdate) {
+        return maintenanceService.update(maintenanceRequestUpdate);
     }
 
 }
