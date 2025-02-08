@@ -26,10 +26,21 @@ export class SidenavbarComponent {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
+  ngAfterViewInit() {
+    this.forceResize();
+  }
+
+  forceResize(): void {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 0);
+  }
+
   toggleSidenav(): void {
     this.isCollapsed = !this.isCollapsed;
     this.cdr.detectChanges();
     window.dispatchEvent(new Event('resize'));
   }
+
 
 }
