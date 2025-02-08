@@ -26,12 +26,13 @@ export class SidenavbarComponent {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
+
   ngAfterViewInit() {
-    this.forceResize();
+    this.startResizeInterval()
   }
 
-  forceResize(): void {
-    setTimeout(() => {
+  startResizeInterval(): void {
+    setInterval(() => {
       window.dispatchEvent(new Event('resize'));
     }, 0);
   }
