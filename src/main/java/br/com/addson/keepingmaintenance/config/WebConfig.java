@@ -14,7 +14,10 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Permitir todas as rotas
-                        .allowedOrigins("http://localhost:4200") // Permitir o front-end
+                        .allowedOrigins(
+                            "http://localhost:4200",
+                            "http://129.148.40.75"
+                        ) // Permitir o front-end
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos HTTP permitidos
                         .allowedHeaders("*") // Cabeçalhos permitidos
                         .allowCredentials(true); // Permitir credenciais (opcional)

@@ -1,16 +1,35 @@
 spring:
+  main:
+    banner-mode: off
+    lazy-initialization: true
   application:
     name: KeepingMaintenance
     version: 0.1
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/keeping_maintenance}
-    username: ${SPRING_DATASOURCE_USERNAME:root}
-    password: ${SPRING_DATASOURCE_PASSWORD:root}
+    url: jdbc:mysql://132.226.244.132:3306/keeping_maintenance
+    username: usr_kpmtc
+    password: rjKb4Y2v6evgF@u5i@XuXy
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 2
+      minimum-idle: 2
+      idle-timeout: 30000
+      connection-timeout: 20000
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+        jdbc:
+          batch_size: 10
+        order_updates: true
+        cache:
+          use_query_cache: false
+          use_second_level_cache: false
+server:
+  tomcat:
+    threads:
+      max: 20
+      min-spare: 5

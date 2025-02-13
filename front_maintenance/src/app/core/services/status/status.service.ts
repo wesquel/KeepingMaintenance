@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Status } from '../../models/status.model';
+import { environment } from '../../../../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatusService  {
 
-  private apiUrl = 'http://127.0.0.1:8080/status';
+  private apiUrl = environment.apiUrl + '/status';
 
   constructor(private http: HttpClient) {}
 
