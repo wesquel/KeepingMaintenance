@@ -5,8 +5,11 @@ WORKDIR /app
 
 COPY . .
 
+ARG BUILD_ENV=production
+
 RUN npm install
-RUN npm run build
+RUN if [ "$BUILD_ENV" = "test" ]; then npm run build -- --configuration=test; else npm run build -- --configuration=production; fi
+
 FROM nginx:alpine
 
 COPY --from=builder /app/dist/front_maintenance/browser usr/share/nginx/html
