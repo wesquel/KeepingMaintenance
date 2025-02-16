@@ -19,11 +19,15 @@ export class MaintenanceService {
   }
 
   createMaintenance(payload: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/create`, payload);
+    return this.http.post<any>(`${this.apiUrl}`, payload);
   }
 
   getMaintenanceById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+  removeMaintenance(id: Number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
 
   updateMaintenance(
