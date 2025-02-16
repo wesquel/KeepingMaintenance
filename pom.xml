@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.addson</groupId>
 	<artifactId>KeepingMaintenance</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>KeepingMaintenance</name>
 	<description>KeepingMaintenance</description>
 	<url/>
