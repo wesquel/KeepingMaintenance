@@ -29,7 +29,7 @@ public class MaintenanceController {
         return maintenanceService.listAll(page, size);
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody MaintenanceRequest maintenanceRequest) {
         try {
             return maintenanceService.create(maintenanceRequest);
@@ -41,6 +41,11 @@ public class MaintenanceController {
     @PutMapping
     public ResponseEntity<?> update(@RequestBody MaintenanceRequestUpdate maintenanceRequestUpdate) {
         return maintenanceService.update(maintenanceRequestUpdate);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        return maintenanceService.delete(id);
     }
 
 }

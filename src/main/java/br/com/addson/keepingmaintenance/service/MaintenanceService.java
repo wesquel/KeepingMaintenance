@@ -92,4 +92,9 @@ public class MaintenanceService {
 
         return ResponseEntity.ok().body(MaintenanceResponse.fromEntity(maintenance));
     }
+
+    public ResponseEntity<?> delete(Long id) {
+        maintenanceRepository.findById(id).ifPresent(maintenanceRepository::delete);
+        return ResponseEntity.ok().build();
+    }
 }
