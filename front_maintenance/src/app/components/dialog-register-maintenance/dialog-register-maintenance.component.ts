@@ -114,7 +114,7 @@ export class DialogRegisterMaintenanceComponent implements OnInit {
           console.log('Manutenção criada com sucesso:', response);
           this.dialogRef.close();
           this.dialog.open(ResponseDialogComponent, {
-            data: { id: response.id },
+            data: { id: response.id, action: 'create'},
             width: '400px'
           });
           this.maintenanceUpdateService.notifyMaintenanceUpdated();

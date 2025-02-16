@@ -56,10 +56,6 @@ export class DialogEditMaintenanceComponent implements OnInit {
     this.initializeForms();
     this.loadStatusAndDeviceTypes();
     this.loadMaintenanceData(this.data.maintenanceId);
-
-
-    // console.log(`ID recebido no Dialog: ${this.data.maintenanceId}`);
-    // this.fetchMaintenanceById(this.data.maintenanceId);
   }
 
   loadStatusAndDeviceTypes(): void {
@@ -136,7 +132,7 @@ export class DialogEditMaintenanceComponent implements OnInit {
           console.log('Manutenção atualizada com sucesso!');
           this.dialogRef.close();
           this.dialog.open(ResponseDialogComponent, {
-            data: { id: this.data.maintenanceId },
+            data: { id: this.data.maintenanceId, action: 'update' },
             width: '400px'
           });
           this.maintenanceUpdateService.notifyMaintenanceUpdated();
