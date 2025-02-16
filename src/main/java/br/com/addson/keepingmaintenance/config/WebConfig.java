@@ -16,7 +16,8 @@ public class WebConfig {
                 registry.addMapping("/**") // Permitir todas as rotas
                         .allowedOrigins(
                             "http://localhost:4200",
-                            "http://129.148.40.75"
+                            "http://129.148.40.75",
+                            "http://keepingmaintenance.fun/"
                         ) // Permitir o front-end
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos HTTP permitidos
                         .allowedHeaders("*") // Cabeçalhos permitidos
