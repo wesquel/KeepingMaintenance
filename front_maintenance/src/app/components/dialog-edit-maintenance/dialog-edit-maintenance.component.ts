@@ -97,7 +97,7 @@ export class DialogEditMaintenanceComponent implements OnInit {
   }
 
   loadMaintenanceData(id: number): void {
-    this.maintenanceService.getMaintenancesById(id).subscribe({
+    this.maintenanceService.getMaintenanceById(id).subscribe({
       next: (data) => {
         this.maintenanceFormGroup.patchValue({
           name: data.name,

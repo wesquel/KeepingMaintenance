@@ -22,7 +22,7 @@ export class MaintenanceService {
     return this.http.post<any>(`${this.apiUrl}/create`, payload);
   }
 
-  getMaintenancesById(id: number): Observable<any> {
+  getMaintenanceById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
