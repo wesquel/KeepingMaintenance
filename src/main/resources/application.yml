@@ -4,18 +4,8 @@ spring:
     lazy-initialization: true
   application:
     name: KeepingMaintenance
-    version: 0.1
+    version: 1.0.0
 
-  datasource:
-    url: jdbc:mysql://132.226.244.132:3306/keeping_maintenance
-    username: usr_kpmtc
-    password: rjKb4Y2v6evgF@u5i@XuXy
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      maximum-pool-size: 2
-      minimum-idle: 2
-      idle-timeout: 30000
-      connection-timeout: 20000
   jpa:
     hibernate:
       ddl-auto: update
@@ -28,6 +18,10 @@ spring:
         cache:
           use_query_cache: false
           use_second_level_cache: false
+
+  profiles:
+    active: test
+
 server:
   tomcat:
     threads:
