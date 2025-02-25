@@ -1,27 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Maintenance } from '../../core/models/maintenance.model';
 import { MaintenanceService } from '../../core/services/maintenance/maintenance.service';
-import {MatChipsModule} from '@angular/material/chips';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { BottomSheetMaintenanceComponent } from '../bottom-sheet-maintenance/bottom-sheet-maintenance.component';
 import { MaintenanceUpdateService } from '../../core/services/maintenanceUpdate/maintenance-update.service';
-
+import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-table-maintenance',
   templateUrl: './table-maintenance.component.html',
   styleUrls: ['./table-maintenance.component.css'],
-  imports: [MatTableModule, MatPaginatorModule, CommonModule, MatChipsModule],
+  imports: [MatTableModule, MatPaginatorModule, CommonModule, MatChipsModule, MatSortModule],
   providers: [MaintenanceService],
 })
 export class TableMaintenanceComponent implements AfterViewInit, OnChanges {
 
+  private _liveAnnouncer = inject(LiveAnnouncer);
+
   displayedColumns: string[] = ['id', 'name', 'status'];
   dataSource = new MatTableDataSource<Maintenance>([]);
   filteredData: Maintenance[] = [...this.dataSource.data]; // Use a propriedade `data` para inicializar
+
+  @ViewChild(MatSort)
+  sort: MatSort = new MatSort;
 
   @Input() filter: string = '';
 
@@ -37,10 +43,19 @@ export class TableMaintenanceComponent implements AfterViewInit, OnChanges {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.fetchMaintenances();
+    this.dataSource.sort = this.sort;
 
     this.maintenanceUpdateService.maintenanceUpdated$.subscribe(() => {
       this.fetchMaintenances(); // Atualiza a lista de manutenções
     });
+  }
+
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 
   fetchMaintenances(): void {
